@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>SLO 5x5 Adventure Race</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+   <script>
+       tailwind.config = {
+           theme: {
+               extend: {
+                   fontFamily: {
+                       oswald: ['Oswald', 'sans-serif'],
+                       inter: ['Inter', 'sans-serif'],
+                   },
+                   colors: {
+                       brand: {
+                           orange: '#ea580c',
+                           dark: '#111827',
+                           gray: '#1f2937',
+                           light: '#f3f4f6'
+                       }
+                   }
+               }
+           }
+       }
+   </script>
+   <style>
+       body { font-family: 'Inter', sans-serif; }
+       h1, h2, h3, h4, .font-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+       .hero-bg {
+           background-image: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.9)), url('https://i0.wp.com/www.newtimesslo.com/wp-content/uploads/2015/01/news-slo_scene-nine_sisters-1.22-2.webp?w=778&ssl=1');
+           background-size: cover;
+           background-position: center;
+       }
+       .peak-card:hover .peak-number { color: #ea580c; transform: scale(1.1); transition: all 0.3s ease;}
+   </style>
+</head>
+<body class="bg-brand-dark text-brand-light antialiased selection:bg-brand-orange selection:text-white">
+
+   <!-- Navigation -->
+   <nav class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-sm border-b border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="flex items-center justify-between h-16">
+               <div class="flex-shrink-0 font-oswald text-2xl tracking-widest text-white">
+                   <a href="index.html">SLO <span class="text-brand-orange">5X5</span></a>
+               </div>
+               <div class="hidden md:block">
+                   <div class="ml-10 flex items-baseline space-x-8">
+                       <a href="#route" class="hover:text-brand-orange px-3 py-2 text-sm font-medium transition-colors">The Route</a>
+                       <a href="#history" class="hover:text-brand-orange px-3 py-2 text-sm font-medium transition-colors">History</a>
+                       <a href="#afterparty" class="hover:text-brand-orange px-3 py-2 text-sm font-medium transition-colors">Afterparty</a>
+                       <a href="roster.html" class="hover:text-brand-orange px-3 py-2 text-sm font-medium transition-colors">Roster</a>
+                       <a href="register.html" class="bg-brand-orange hover:bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold tracking-wider transition-colors">CLAIM INVITE</a>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </nav>
+
+   <!-- Hero Section -->
+   <section class="hero-bg min-h-screen flex items-center pt-16">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center md:text-left">
+           <p class="text-brand-orange font-bold tracking-[0.2em] mb-4">YEAR 3 // SAN LUIS OBISPO</p>
+           <h1 class="text-5xl md:text-8xl font-black text-white leading-tight mb-6 tracking-tight">
+               SEEK<br/>DISCOMFORT
+           </h1>
+           <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-2xl font-light border-l-4 border-brand-orange pl-4 mb-8">
+               5 peaks. 5 rides.<br/>The ultimate bike-and-hike adventure race.
+           </p>
+
+           <div class="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 mb-10 font-oswald tracking-widest text-white">
+               <div>
+                   <span class="block text-brand-orange font-black text-4xl md:text-5xl">SEPT 12</span>
+                   <span class="text-sm md:text-base text-gray-400">5:30 AM START</span>
+               </div>
+               <div>
+                   <span class="block text-brand-orange font-black text-4xl md:text-5xl">5</span>
+                   <span class="text-sm md:text-base text-gray-400">PEAKS</span>
+               </div>
+               <div>
+                   <span class="block text-brand-orange font-black text-4xl md:text-5xl">28</span>
+                   <span class="text-sm md:text-base text-gray-400">TOTAL MILES</span>
+               </div>
+               <div>
+                   <span class="block text-brand-orange font-black text-4xl md:text-5xl">4,500'</span>
+                   <span class="text-sm md:text-base text-gray-400">ELEVATION GAIN</span>
+               </div>
+           </div>
+
+           <div class="flex flex-col sm:flex-row gap-4">
+               <a href="register.html" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-bold rounded bg-brand-orange text-white hover:bg-orange-500 md:w-auto w-full transition-colors font-oswald tracking-widest">
+                   REGISTER NOW
+               </a>
+               <a href="#route" class="inline-flex justify-center items-center px-8 py-4 border-2 border-gray-500 text-lg font-bold rounded text-white hover:border-white md:w-auto w-full transition-colors font-oswald tracking-widest">
+                   VIEW THE ROUTE
+               </a>
+           </div>
+       </div>
+   </section>
+
+   <!-- The Route Section -->
+   <section id="route" class="py-24 bg-brand-gray border-y border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="text-center mb-16">
+               <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">THE GAUNTLET</h2>
+               <p class="text-gray-400 max-w-2xl mx-auto">From Morro Rock to Islay Hill. 18 miles of biking, 10 miles of hiking, 4,500 feet of elevation gain. </p>
+           </div>
+
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+               <!-- Start / Peak 1 -->
+               <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 peak-card flex flex-col">
+                   <div class="text-brand-orange font-black text-6xl opacity-50 mb-4 peak-number transition-all">01</div>
+                   <img src="https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=1000&auto=format&fit=crop" alt="Black Hill" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500 mb-4">
+                   <h3 class="text-2xl font-bold text-white mb-2">MORRO ROCK to BLACK HILL</h3>
+                   <p class="text-gray-400 text-sm">The journey begins at the iconic Morro Rock. Mount up and bike to the base of Black Hill, transitioning to your first hike to the summit.</p>
+               </div>
+               <!-- Peak 2 -->
+               <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 peak-card flex flex-col">
+                   <div class="text-brand-orange font-black text-6xl opacity-50 mb-4 peak-number transition-all">02</div>
+                   <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000&auto=format&fit=crop" alt="Cabrillo" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500 mb-4">
+                   <h3 class="text-2xl font-bold text-white mb-2">CABRILLO</h3>
+                   <p class="text-gray-400 text-sm">Descend, grab the bike, and push towards Cerro Cabrillo. Leave the wheels behind and tackle the rocky ascent.</p>
+               </div>
+               <!-- Peak 3 -->
+               <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 peak-card flex flex-col">
+                   <div class="text-brand-orange font-black text-6xl opacity-50 mb-4 peak-number transition-all">03</div>
+                   <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=1000&auto=format&fit=crop" alt="Bishop Peak" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500 mb-4">
+                   <h3 class="text-2xl font-bold text-white mb-2">BISHOP PEAK</h3>
+                   <p class="text-gray-400 text-sm">The highest of the Morros. Bike to the trailhead and prepare for a grueling climb to the top of SLO's most famous peak.</p>
+               </div>
+               <!-- Peak 4 -->
+               <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 peak-card flex flex-col">
+                   <div class="text-brand-orange font-black text-6xl opacity-50 mb-4 peak-number transition-all">04</div>
+                   <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=1000&auto=format&fit=crop" alt="Madonna" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500 mb-4">
+                   <h3 class="text-2xl font-bold text-white mb-2">MADONNA (CERRO SAN LUIS)</h3>
+                   <p class="text-gray-400 text-sm">Back on the saddle. Navigate to the base of Madonna. Your legs are burning, but the hike up the 'M' awaits.</p>
+               </div>
+               <!-- Peak 5 -->
+               <div class="bg-brand-dark p-6 rounded-lg border border-gray-700 peak-card flex flex-col md:col-span-2 lg:col-span-1">
+                   <div class="text-brand-orange font-black text-6xl opacity-50 mb-4 peak-number transition-all">05</div>
+                   <img src="https://images.unsplash.com/photo-1516596544812-361fa558e2d8?q=80&w=1000&auto=format&fit=crop" alt="Islay Hill" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500 mb-4">
+                   <h3 class="text-2xl font-bold text-white mb-2">ISLAY HILL</h3>
+                   <p class="text-gray-400 text-sm">The final push. Bike all the way across town to Islay Hill. Empty the tank on the final hike to claim your 5x5 finisher status.</p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- History Section -->
+   <section id="history" class="py-24">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              
+               <div>
+                   <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">YEAR 3: BIGGER. BADDER.</h2>
+                   <p class="text-gray-400 mb-6 text-lg">
+                       What started as a crazy idea with 9 people in Year 1 grew to a punishing pack of 16 in Year 2. This year, we're shooting for 50 racers.
+                   </p>
+                   <p class="text-gray-400 text-lg">
+                       Because this race is about community and doing hard things, it remains <strong class="text-brand-orange">invite-only</strong>. If you are registering, you've earned 3 invitations to bring new blood into the gauntlet. Choose wisely.
+                   </p>
+               </div>
+
+               <!-- Image Gallery -->
+               <div class="grid grid-cols-2 gap-4">
+                   <div class="space-y-4">
+                       <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=1000&auto=format&fit=crop" alt="Hiking Year 1" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                       <img src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=1000&auto=format&fit=crop" alt="Biking Year 2" class="rounded-lg shadow-lg object-cover h-64 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                   </div>
+                   <div class="space-y-4 mt-8">
+                       <img src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?q=80&w=1000&auto=format&fit=crop" alt="Trail Running" class="rounded-lg shadow-lg object-cover h-64 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                       <img src="https://images.unsplash.com/photo-1615800098779-1be32e60cca3?q=80&w=1000&auto=format&fit=crop" alt="Peak Finish" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- Afterparty Section -->
+   <section id="afterparty" class="py-24 bg-brand-gray border-t border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              
+               <!-- Image Gallery (Left Side on Desktop, Bottom on Mobile) -->
+               <div class="grid grid-cols-2 gap-4 order-2 lg:order-1">
+                   <div class="space-y-4">
+                       <img src="https://images.unsplash.com/photo-1530103862676-de3c9de59f9e?q=80&w=1000&auto=format&fit=crop" alt="Party Gatherings" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                       <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1000&auto=format&fit=crop" alt="Biergarten" class="rounded-lg shadow-lg object-cover h-64 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                   </div>
+                   <div class="space-y-4 mt-8">
+                       <img src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1000&auto=format&fit=crop" alt="Catered Food" class="rounded-lg shadow-lg object-cover h-64 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                       <img src="https://images.unsplash.com/photo-1544421272-3f191b7e411b?q=80&w=1000&auto=format&fit=crop" alt="Kids Playing" class="rounded-lg shadow-lg object-cover h-48 w-full filter grayscale hover:grayscale-0 transition duration-500">
+                   </div>
+               </div>
+
+               <!-- Text (Right Side on Desktop, Top on Mobile) -->
+               <div class="order-1 lg:order-2">
+                   <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">THE AFTERPARTY</h2>
+                   <p class="text-gray-400 mb-6 text-lg">
+                       Survive the peaks, earn the pints. September's suffering leads straight into the <strong class="text-brand-orange">Oktober Fest at the Kunz's house</strong>. We will also be celebrating Josh and Craig's birthday!
+                   </p>
+                   <p class="text-gray-400 mb-6 text-lg">
+                       We will be catering dinner from <strong>Beda's Biergarten</strong>. Folks are encouraged to bring a side and their favorite beverage to share (alcoholic or non-alcoholic).
+                   </p>
+                   <p class="text-gray-400 text-lg">
+                       Families and significant others are highly encouraged to join the celebration! There will be fun activities for the kiddos while the racers swap war stories from the trail.
+                   </p>
+               </div>
+
+           </div>
+       </div>
+   </section>
+
+   <!-- Footer -->
+   <footer class="bg-black py-10 border-t border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+           <div class="font-oswald text-2xl tracking-widest text-white mb-4">
+               SLO <span class="text-brand-orange">5X5</span>
+           </div>
+           <p class="text-gray-600 text-sm">San Luis Obispo, CA. Seek Discomfort.</p>
+       </div>
+   </footer>
+</body>
+</html>
