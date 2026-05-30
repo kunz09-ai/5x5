@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Register - SLO 5x5 Adventure Race</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+   <script>
+       tailwind.config = {
+           theme: {
+               extend: {
+                   fontFamily: {
+                       oswald: ['Oswald', 'sans-serif'],
+                       inter: ['Inter', 'sans-serif'],
+                   },
+                   colors: {
+                       brand: {
+                           orange: '#ea580c',
+                           dark: '#111827',
+                           gray: '#1f2937',
+                           light: '#f3f4f6'
+                       }
+                   }
+               }
+           }
+       }
+   </script>
+   <style>
+       body { font-family: 'Inter', sans-serif; }
+       h1, h2, h3, h4, .font-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+   </style>
+</head>
+<body class="bg-brand-dark text-brand-light antialiased selection:bg-brand-orange selection:text-white">
+
+   <!-- Navigation -->
+   <nav class="fixed w-full z-50 bg-brand-dark border-b border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="flex items-center justify-between h-16">
+               <div class="flex-shrink-0 font-oswald text-2xl tracking-widest text-white">
+                   <a href="index.html">SLO <span class="text-brand-orange">5X5</span></a>
+               </div>
+               <div class="flex items-center space-x-6">
+                   <a href="roster.html" class="text-sm font-bold text-gray-400 hover:text-white transition-colors tracking-widest uppercase flex items-center">
+                       Roster
+                   </a>
+                   <!-- Back to Main Site -->
+                   <a href="index.html" class="text-sm font-bold text-gray-400 hover:text-white transition-colors tracking-widest uppercase flex items-center">
+                       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                       Back
+                   </a>
+               </div>
+           </div>
+       </div>
+   </nav>
+
+   <!-- Registration Form Section -->
+   <section class="pt-32 pb-24 bg-brand-dark min-h-screen">
+       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="text-center mb-12">
+               <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">CLAIM YOUR SPOT</h2>
+               <p class="text-gray-400">Register yourself and claim your 3 invitations for the SLO 5x5.</p>
+           </div>
+
+           <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="bg-brand-gray p-8 md:p-10 rounded-xl shadow-2xl border border-gray-700">
+              
+               <!-- Primary Racer -->
+               <div class="mb-10">
+                   <h3 class="text-2xl font-bold text-brand-orange border-b border-gray-700 pb-2 mb-6">YOUR INFORMATION</h3>
+                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                       <div>
+                           <label class="block text-sm font-medium text-gray-400 mb-2">Full Name *</label>
+                           <input type="text" name="racerName" required class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                       </div>
+                       <div>
+                           <label class="block text-sm font-medium text-gray-400 mb-2">Email Address *</label>
+                           <input type="email" name="racerEmail" required class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                       </div>
+                   </div>
+
+                   <!-- Extras & Party -->
+                   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-gray-700">
+                       <div>
+                           <label class="block text-sm font-medium text-gray-400 mb-2">T-Shirt Size from J.Carroll ($30)</label>
+                           <select name="tshirtSize" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               <option value="None">No thanks</option>
+                               <option value="S">Small</option>
+                               <option value="M">Medium</option>
+                               <option value="L">Large</option>
+                               <option value="XL">X-Large</option>
+                               <option value="2XL">2XL</option>
+                               <option value="3XL">3XL</option>
+                           </select>
+                       </div>
+                       <div>
+                           <label class="block text-sm font-medium text-gray-400 mb-2">Afterparty?</label>
+                           <select name="afterparty" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               <option value="Yes">Yes, I'll be there</option>
+                               <option value="No">No, can't make it</option>
+                           </select>
+                       </div>
+                       <div>
+                           <label class="block text-sm font-medium text-gray-400 mb-2">Party Guests</label>
+                           <input type="number" name="partyGuests" min="0" value="0" placeholder="0" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Invites -->
+               <div class="mb-10">
+                   <h3 class="text-2xl font-bold text-brand-orange border-b border-gray-700 pb-2 mb-6">YOUR 3 INVITATIONS</h3>
+                   <p class="text-sm text-gray-400 mb-6">You have the power to invite 3 people to suffer with us. Provide their info below.</p>
+                  
+                   <div class="space-y-8">
+                       <!-- Invite 1 -->
+                       <div class="bg-gray-800 p-4 rounded border border-gray-700">
+                           <h4 class="text-white mb-4 text-lg">INVITEE #1</h4>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <div>
+                                   <input type="text" name="invite1Name" placeholder="Name" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               </div>
+                               <div>
+                                   <input type="email" name="invite1Email" placeholder="Email Address" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- Invite 2 -->
+                       <div class="bg-gray-800 p-4 rounded border border-gray-700">
+                           <h4 class="text-white mb-4 text-lg">INVITEE #2</h4>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <div>
+                                   <input type="text" name="invite2Name" placeholder="Name" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               </div>
+                               <div>
+                                   <input type="email" name="invite2Email" placeholder="Email Address" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- Invite 3 -->
+                       <div class="bg-gray-800 p-4 rounded border border-gray-700">
+                           <h4 class="text-white mb-4 text-lg">INVITEE #3</h4>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <div>
+                                   <input type="text" name="invite3Name" placeholder="Name" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               </div>
+                               <div>
+                                   <input type="email" name="invite3Email" placeholder="Email Address" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Feedback Message -->
+               <div id="formMessage" class="hidden mb-6 p-4 rounded-md font-bold text-center"></div>
+
+               <button type="submit" id="submitBtn" class="w-full bg-brand-orange hover:bg-orange-500 text-white font-oswald tracking-widest text-xl py-5 rounded-md transition-colors flex justify-center items-center">
+                   <span>SUBMIT REGISTRATION</span>
+                   <svg id="loadingSpinner" class="hidden animate-spin ml-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                   </svg>
+               </button>
+           </form>
+       </div>
+   </section>
+
+   <!-- Footer -->
+   <footer class="bg-black py-10 border-t border-gray-800 mt-auto">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+           <div class="font-oswald text-2xl tracking-widest text-white mb-4">
+               SLO <span class="text-brand-orange">5X5</span>
+           </div>
+           <p class="text-gray-600 text-sm">San Luis Obispo, CA. Seek Discomfort.</p>
+       </div>
+   </footer>
+
+   <!-- Script for Form Handling -->
+   <script>
+       // Replace this string with the published Google Apps Script URL
+       const WEB_APP_URL = "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE";
+
+       function handleFormSubmit(event) {
+           event.preventDefault();
+          
+           const form = event.target;
+           const btn = document.getElementById('submitBtn');
+           const spinner = document.getElementById('loadingSpinner');
+           const msgBox = document.getElementById('formMessage');
+          
+           // UI Loading state
+           btn.disabled = true;
+           btn.classList.add('opacity-75', 'cursor-not-allowed');
+           spinner.classList.remove('hidden');
+           msgBox.className = 'hidden';
+
+           const formData = new FormData(form);
+           const data = Object.fromEntries(formData.entries());
+
+           if (WEB_APP_URL && WEB_APP_URL !== "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE") {
+               // POST standard JSON over to Google Sheets Web App CORS Endpoint
+               fetch(WEB_APP_URL, {
+                   method: 'POST',
+                   mode: 'no-cors', // Solves redirect preflight blocks
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify(data)
+               })
+               .then(function() {
+                   // 'no-cors' mode returns opaque response. We assume success if the request finishes without catch
+                   showFeedback('success', "Registration received! Prepare to suffer.");
+                   form.reset();
+                   resetButton();
+               })
+               .catch(function(error) {
+                   console.error("Submission failed:", error);
+                   showFeedback('error', "Something went wrong. Please check connection.");
+                   resetButton();
+               });
+           } else {
+               // Local Test Mode
+               setTimeout(() => {
+                   showFeedback('success', "Registration received! (Test Mode).");
+                   form.reset();
+                   resetButton();
+               }, 1500);
+           }
+
+           function showFeedback(type, text) {
+               msgBox.innerText = text;
+               msgBox.className = type === 'success'
+                   ? 'mb-6 p-4 rounded-md font-bold text-center bg-green-900/50 text-green-400 border border-green-800 block'
+                   : 'mb-6 p-4 rounded-md font-bold text-center bg-red-900/50 text-red-400 border border-red-800 block';
+           }
+
+           function resetButton() {
+               btn.disabled = false;
+               btn.classList.remove('opacity-75', 'cursor-not-allowed');
+               spinner.classList.add('hidden');
+           }
+       }
+   </script>
+</body>
+</html>
