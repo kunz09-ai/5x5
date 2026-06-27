@@ -141,12 +141,12 @@
                const li = document.createElement('li');
                li.className = 'bg-gray-800 border border-gray-700 p-4 rounded-md flex items-start space-x-4';
                li.innerHTML = `
-                   <div class="flex items-center space-x-4 w-full">
-                       <div class="font-oswald text-brand-orange text-xl opacity-50 font-black w-8 text-right flex-shrink-0">
+                   <div class="flex items-start space-x-4 w-full">
+                       <div class="font-oswald text-brand-orange opacity-50 font-black w-8 text-right flex-shrink-0 leading-snug" style="font-size:18px;">
                            ${String(index + 1).padStart(2, '0')}
                        </div>
                        <div class="flex-1 min-w-0">
-                           <div class="text-white font-bold text-lg leading-tight">${escapeHtml(name)}</div>
+                           <div class="text-white font-bold leading-snug" style="font-size:18px;">${escapeHtml(name)}</div>
                            ${bio ? `<p class="text-gray-400 text-sm mt-1 leading-snug">${escapeHtml(bio)}</p>` : ''}
                        </div>
                    </div>
