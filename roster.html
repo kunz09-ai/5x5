@@ -71,7 +71,7 @@
                </div>
 
                <ul id="rosterList" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
-                   <!-- Names will be injected here via JavaScript -->
+                   <!-- Racer cards injected here -->
                </ul>
 
                <div id="emptyState" class="hidden text-center py-12">
@@ -92,9 +92,7 @@
        </div>
    </footer>
 
-   <!-- Script to fetch racers on load -->
    <script>
-       // Replace this string with the published Google Apps Script URL
        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwRavnuKNu0FYR4mucFbJ0VGqz_CfoK4ldjUJcJgG7HXJnGIw2Rva0oQ276IHucbKj8/exec";
 
        document.addEventListener("DOMContentLoaded", function() {
@@ -112,9 +110,14 @@
                        document.getElementById('loadingState').innerHTML = '<p class="text-red-500">Failed to load roster. Please refresh.</p>';
                    });
            } else {
-               // Local Mock environment fallback
+               // Local mock — now returns objects with name + bio
                setTimeout(() => {
-                   renderRoster(['Josh Kunz', 'Craig Test', 'Adventure Racer 1', 'Mountain Biker 2']);
+                   renderRoster([
+                       { name: 'Josh Kunz', bio: 'Two-time finisher. Still not sure why he keeps coming back.' },
+                       { name: 'Craig Test', bio: 'Fueled entirely by spite and cold brew.' },
+                       { name: 'Adventure Racer 1', bio: '' },
+                       { name: 'Mountain Biker 2', bio: 'Rode the whole route once just to scout it. No big deal.' },
+                   ]);
                }, 1000);
            }
        });
@@ -131,16 +134,27 @@
            rosterList.classList.remove('hidden');
           
            racers.forEach((racer, index) => {
+               // Support both plain string (old format) and object (new format)
+               const name = typeof racer === 'string' ? racer : racer.name;
+               const bio  = typeof racer === 'string' ? '' : (racer.bio || '');
+
                const li = document.createElement('li');
-               li.className = 'bg-gray-800 border border-gray-700 p-4 rounded-md flex items-center space-x-4';
+               li.className = 'bg-gray-800 border border-gray-700 p-4 rounded-md flex items-start space-x-4';
                li.innerHTML = `
-                   <div class="font-oswald text-brand-orange text-xl opacity-50 font-black w-8 text-right">
+                   <div class="font-oswald text-brand-orange text-xl opacity-50 font-black w-8 text-right flex-shrink-0 pt-1">
                        ${String(index + 1).padStart(2, '0')}
                    </div>
-                   <div class="text-white font-bold text-lg">${racer}</div>
+                   <div class="flex-1 min-w-0">
+                       <div class="text-white font-bold text-lg leading-tight">${escapeHtml(name)}</div>
+                       ${bio ? `<p class="text-gray-400 text-sm mt-1 leading-snug">${escapeHtml(bio)}</p>` : ''}
+                   </div>
                `;
                rosterList.appendChild(li);
            });
+       }
+
+       function escapeHtml(str) {
+           return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
        }
    </script>
 </body>
