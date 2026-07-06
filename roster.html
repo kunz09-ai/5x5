@@ -92,34 +92,28 @@
        </div>
    </footer>
 
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
    <script>
-       const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwRavnuKNu0FYR4mucFbJ0VGqz_CfoK4ldjUJcJgG7HXJnGIw2Rva0oQ276IHucbKj8/exec";
+       const SUPABASE_URL = "https://zgyoqtaqloyvjuzczzab.supabase.co";
+       const SUPABASE_KEY = "sb_publishable_yuYzDxVVq-UG1kBM8SXeaA_4dWXcnwy";
+       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
        document.addEventListener("DOMContentLoaded", function() {
-           if (WEB_APP_URL && WEB_APP_URL !== "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE") {
-               fetch(`${WEB_APP_URL}?path=roster`)
-                   .then(response => {
-                       if (!response.ok) throw new Error("Network response error");
-                       return response.json();
-                   })
-                   .then(data => {
-                       renderRoster(data);
-                   })
-                   .catch(function(error) {
-                       console.error("Failed to load roster:", error);
-                       document.getElementById('loadingState').innerHTML = '<p class="text-red-500">Failed to load roster. Please refresh.</p>';
-                   });
-           } else {
-               // Local mock — now returns objects with name + bio
-               setTimeout(() => {
-                   renderRoster([
-                       { name: 'Josh Kunz', bio: 'Two-time finisher. Still not sure why he keeps coming back.' },
-                       { name: 'Craig Test', bio: 'Fueled entirely by spite and cold brew.' },
-                       { name: 'Adventure Racer 1', bio: '' },
-                       { name: 'Mountain Biker 2', bio: 'Rode the whole route once just to scout it. No big deal.' },
-                   ]);
-               }, 1000);
-           }
+           supabaseClient
+               .from('roster')
+               .select('name, bio')
+               // Primary racers first, then confirmed invitees -- same grouping
+               // the old Apps Script produced (Registrations sheet, then Confirmed Invitees).
+               .order('category', { ascending: false })
+               .order('created_at', { ascending: true })
+               .then(({ data, error }) => {
+                   if (error) throw error;
+                   renderRoster(data);
+               })
+               .catch(function(error) {
+                   console.error("Failed to load roster:", error);
+                   document.getElementById('loadingState').innerHTML = '<p class="text-red-500">Failed to load roster. Please refresh.</p>';
+               });
        });
 
        function renderRoster(racers) {

@@ -179,17 +179,18 @@
 
    <!-- Script for Form Handling -->
    <script>
-       // Replace this string with the published Google Apps Script URL
-       const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwRavnuKNu0FYR4mucFbJ0VGqz_CfoK4ldjUJcJgG7HXJnGIw2Rva0oQ276IHucbKj8/exec";
+       // Supabase Edge Function: inserts the registration and sends the
+       // racer/invitee emails (replaces the old Google Apps Script Web App).
+       const REGISTER_FUNCTION_URL = "https://zgyoqtaqloyvjuzczzab.supabase.co/functions/v1/register";
 
        function handleFormSubmit(event) {
            event.preventDefault();
-          
+
            const form = event.target;
            const btn = document.getElementById('submitBtn');
            const spinner = document.getElementById('loadingSpinner');
            const msgBox = document.getElementById('formMessage');
-          
+
            // UI Loading state
            btn.disabled = true;
            btn.classList.add('opacity-75', 'cursor-not-allowed');
@@ -199,35 +200,28 @@
            const formData = new FormData(form);
            const data = Object.fromEntries(formData.entries());
 
-           if (WEB_APP_URL && WEB_APP_URL !== "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE") {
-               // POST standard JSON over to Google Sheets Web App CORS Endpoint
-               fetch(WEB_APP_URL, {
-                   method: 'POST',
-                   mode: 'no-cors', // Solves redirect preflight blocks
-                   headers: {
-                       'Content-Type': 'application/json'
-                   },
-                   body: JSON.stringify(data)
-               })
-               .then(function() {
-                   // 'no-cors' mode returns opaque response. We assume success if the request finishes without catch
-                   showFeedback('success', "Registration received! Prepare to suffer.");
-                   form.reset();
-                   resetButton();
-               })
-               .catch(function(error) {
-                   console.error("Submission failed:", error);
-                   showFeedback('error', "Something went wrong. Please check connection.");
-                   resetButton();
+           fetch(REGISTER_FUNCTION_URL, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify(data)
+           })
+           .then(function(response) {
+               return response.json().then(function(body) {
+                   if (!response.ok || body.status !== 'success') {
+                       throw new Error(body.message || 'Registration failed');
+                   }
                });
-           } else {
-               // Local Test Mode
-               setTimeout(() => {
-                   showFeedback('success', "Registration received! (Test Mode).");
-                   form.reset();
-                   resetButton();
-               }, 1500);
-           }
+           })
+           .then(function() {
+               showFeedback('success', "Registration received! Prepare to suffer.");
+               form.reset();
+               resetButton();
+           })
+           .catch(function(error) {
+               console.error("Submission failed:", error);
+               showFeedback('error', "Something went wrong. Please check connection.");
+               resetButton();
+           });
 
            function showFeedback(type, text) {
                msgBox.innerText = text;

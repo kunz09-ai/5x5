@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Confirm Invitation - SLO 5x5 Adventure Race</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+   <script>
+       tailwind.config = {
+           theme: {
+               extend: {
+                   fontFamily: {
+                       oswald: ['Oswald', 'sans-serif'],
+                       inter: ['Inter', 'sans-serif'],
+                   },
+                   colors: {
+                       brand: {
+                           orange: '#ea580c',
+                           dark: '#111827',
+                           gray: '#1f2937',
+                           light: '#f3f4f6'
+                       }
+                   }
+               }
+           }
+       }
+   </script>
+   <style>
+       body { font-family: 'Inter', sans-serif; }
+       h1, h2, h3, h4, .font-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+   </style>
+</head>
+<body class="bg-brand-dark text-brand-light antialiased selection:bg-brand-orange selection:text-white flex flex-col min-h-screen">
+
+   <nav class="fixed w-full z-50 bg-brand-dark border-b border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="flex items-center justify-between h-16">
+               <div class="flex-shrink-0 font-oswald text-2xl tracking-widest text-white">
+                   <a href="index.html">SLO <span class="text-brand-orange">5X5</span></a>
+               </div>
+           </div>
+       </div>
+   </nav>
+
+   <section class="pt-32 pb-24 flex-grow flex items-center justify-center">
+       <div class="max-w-lg mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+           <div id="loadingState">
+               <svg class="animate-spin h-10 w-10 text-brand-orange mb-6 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+               </svg>
+               <p class="text-gray-400 font-oswald tracking-widest">CONFIRMING...</p>
+           </div>
+
+           <div id="confirmedState" class="hidden">
+               <h1 class="text-5xl font-bold text-brand-orange mb-4">YOU'RE IN.</h1>
+               <p class="text-lg text-gray-300 mb-6">Your spot for the SLO 5x5 Adventure Race has been confirmed.</p>
+               <div class="inline-block bg-brand-gray border border-gray-700 px-6 py-3 rounded-lg font-bold mb-3">
+                   Invited by: <span id="inviterName" class="text-brand-orange"></span>
+               </div>
+               <br>
+               <div class="inline-block bg-brand-gray border border-gray-700 px-6 py-3 rounded-lg font-bold">
+                   T-Shirt: <span id="tshirtSize" class="text-brand-orange"></span>
+               </div>
+               <p class="mt-10 text-sm text-gray-500">See you at Morro Rock on September 12th at 5:30 AM.</p>
+           </div>
+
+           <div id="invalidState" class="hidden">
+               <h2 class="text-3xl font-bold text-brand-orange mb-4">Invalid Link</h2>
+               <p class="text-gray-300">This confirmation link is not valid. Please contact Josh Kunz at 650.714.3340.</p>
+           </div>
+
+           <div id="errorState" class="hidden">
+               <h2 class="text-3xl font-bold text-brand-orange mb-4">Something Went Wrong</h2>
+               <p class="text-gray-300">Please contact Josh Kunz directly at 650.714.3340.</p>
+           </div>
+
+       </div>
+   </section>
+
+   <footer class="bg-black py-10 border-t border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+           <div class="font-oswald text-2xl tracking-widest text-white mb-4">
+               SLO <span class="text-brand-orange">5X5</span>
+           </div>
+           <p class="text-gray-600 text-sm">San Luis Obispo, CA. Seek Discomfort.</p>
+       </div>
+   </footer>
+
+   <script>
+       const CONFIRM_FUNCTION_URL = "https://zgyoqtaqloyvjuzczzab.supabase.co/functions/v1/confirm";
+
+       function show(id) {
+           ['loadingState', 'confirmedState', 'invalidState', 'errorState'].forEach(function(s) {
+               document.getElementById(s).classList.toggle('hidden', s !== id);
+           });
+       }
+
+       const params = new URLSearchParams(window.location.search);
+       fetch(`${CONFIRM_FUNCTION_URL}?${params.toString()}`)
+           .then(function(response) { return response.json(); })
+           .then(function(data) {
+               if (data.status === 'confirmed') {
+                   document.getElementById('inviterName').textContent = data.inviter;
+                   document.getElementById('tshirtSize').textContent = data.tshirt;
+                   show('confirmedState');
+               } else if (data.status === 'invalid') {
+                   show('invalidState');
+               } else {
+                   show('errorState');
+               }
+           })
+           .catch(function(error) {
+               console.error('Confirmation failed:', error);
+               show('errorState');
+           });
+   </script>
+</body>
+</html>
