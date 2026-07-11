@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin - SLO 5x5 Adventure Race</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+   <script>
+       tailwind.config = {
+           theme: {
+               extend: {
+                   fontFamily: {
+                       oswald: ['Oswald', 'sans-serif'],
+                       inter: ['Inter', 'sans-serif'],
+                   },
+                   colors: {
+                       brand: {
+                           orange: '#ea580c',
+                           dark: '#111827',
+                           gray: '#1f2937',
+                           light: '#f3f4f6'
+                       }
+                   }
+               }
+           }
+       }
+   </script>
+   <style>
+       body { font-family: 'Inter', sans-serif; }
+       h1, h2, h3, h4, .font-oswald { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+   </style>
+</head>
+<body class="bg-brand-dark text-brand-light antialiased selection:bg-brand-orange selection:text-white flex flex-col min-h-screen">
+
+   <nav class="fixed w-full z-50 bg-brand-dark border-b border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="flex items-center justify-between h-16">
+               <div class="flex-shrink-0 font-oswald text-2xl tracking-widest text-white">
+                   <a href="index.html">SLO <span class="text-brand-orange">5X5</span></a>
+               </div>
+               <div class="text-sm font-bold text-gray-400 tracking-widest uppercase">Admin</div>
+           </div>
+       </div>
+   </nav>
+
+   <!-- Password gate -->
+   <section id="loginSection" class="pt-32 pb-24 flex-grow flex items-center justify-center">
+       <div class="max-w-sm mx-auto px-4 sm:px-6 lg:px-8 w-full">
+           <div class="bg-brand-gray p-8 rounded-xl shadow-2xl border border-gray-700">
+               <h2 class="text-2xl font-bold text-white mb-6 text-center">ADMIN LOGIN</h2>
+               <input type="password" id="passwordInput" placeholder="Admin password"
+                   class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white mb-4 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
+               <label class="flex items-center text-sm text-gray-400 mb-4">
+                   <input type="checkbox" id="rememberMe" class="mr-2">
+                   Remember on this device
+               </label>
+               <button id="loginBtn" class="w-full bg-brand-orange hover:bg-orange-500 text-white font-oswald tracking-widest py-3 rounded-md transition-colors">LOG IN</button>
+               <p id="loginError" class="hidden text-red-400 text-sm mt-4 text-center">Incorrect password.</p>
+           </div>
+       </div>
+   </section>
+
+   <!-- Admin content -->
+   <section id="adminSection" class="hidden pt-32 pb-24 flex-grow">
+       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div class="flex items-center justify-between mb-8">
+               <h2 class="text-3xl font-bold text-white">MANAGE BIOS</h2>
+               <button id="logoutBtn" class="text-sm text-gray-400 hover:text-white underline">Log out</button>
+           </div>
+
+           <div id="loadingState" class="text-gray-400 font-oswald tracking-widest">LOADING...</div>
+
+           <div id="registrationsBlock" class="hidden mb-12">
+               <h3 class="text-xl font-bold text-brand-orange mb-4 border-b border-gray-700 pb-2">Racers</h3>
+               <div id="registrationsList" class="space-y-4"></div>
+           </div>
+
+           <div id="invitesBlock" class="hidden">
+               <h3 class="text-xl font-bold text-brand-orange mb-4 border-b border-gray-700 pb-2">Confirmed Invitees</h3>
+               <div id="invitesList" class="space-y-4"></div>
+           </div>
+       </div>
+   </section>
+
+   <footer class="bg-black py-10 border-t border-gray-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+           <div class="font-oswald text-2xl tracking-widest text-white mb-4">
+               SLO <span class="text-brand-orange">5X5</span>
+           </div>
+           <p class="text-gray-600 text-sm">San Luis Obispo, CA. Seek Discomfort.</p>
+       </div>
+   </footer>
+
+   <script>
+       const ADMIN_FUNCTION_URL = "https://zgyoqtaqloyvjuzczzab.supabase.co/functions/v1/admin";
+       let adminPassword = sessionStorage.getItem('adminPassword') || localStorage.getItem('adminPassword') || '';
+
+       function escapeHtml(str) {
+           return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+       }
+
+       function showAdmin() {
+           document.getElementById('loginSection').classList.add('hidden');
+           document.getElementById('adminSection').classList.remove('hidden');
+           loadData();
+       }
+
+       function showLogin(error) {
+           document.getElementById('adminSection').classList.add('hidden');
+           document.getElementById('loginSection').classList.remove('hidden');
+           document.getElementById('loginError').classList.toggle('hidden', !error);
+       }
+
+       function loadData() {
+           fetch(ADMIN_FUNCTION_URL, { headers: { 'x-admin-password': adminPassword } })
+               .then(function(response) {
+                   if (response.status === 401) throw new Error('unauthorized');
+                   return response.json();
+               })
+               .then(function(data) {
+                   document.getElementById('loadingState').classList.add('hidden');
+                   renderRegistrations(data.registrations);
+                   renderInvitees(data.confirmed_invitees);
+               })
+               .catch(function(error) {
+                   console.error('Failed to load admin data:', error);
+                   if (error.message === 'unauthorized') {
+                       sessionStorage.removeItem('adminPassword');
+                       localStorage.removeItem('adminPassword');
+                       showLogin(true);
+                   } else {
+                       document.getElementById('loadingState').textContent = 'Failed to load data. Please refresh.';
+                   }
+               });
+       }
+
+       function bioCard(personLabel, subLabel, bio, table, id) {
+           const div = document.createElement('div');
+           div.className = 'bg-brand-gray border border-gray-700 rounded-lg p-5';
+           div.innerHTML = `
+               <div class="flex items-baseline justify-between mb-3">
+                   <div>
+                       <div class="text-white font-bold">${escapeHtml(personLabel)}</div>
+                       <div class="text-gray-500 text-sm">${escapeHtml(subLabel)}</div>
+                   </div>
+               </div>
+               <textarea rows="2" class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 px-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent bio-input">${escapeHtml(bio)}</textarea>
+               <div class="flex items-center justify-end mt-2 space-x-3">
+                   <span class="save-status text-sm text-gray-500"></span>
+                   <button class="save-btn bg-brand-orange hover:bg-orange-500 text-white text-sm font-bold px-4 py-1.5 rounded-md transition-colors">Save</button>
+               </div>
+           `;
+
+           const textarea = div.querySelector('.bio-input');
+           const status = div.querySelector('.save-status');
+           div.querySelector('.save-btn').addEventListener('click', function() {
+               status.textContent = 'Saving...';
+               fetch(ADMIN_FUNCTION_URL, {
+                   method: 'PATCH',
+                   headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+                   body: JSON.stringify({ table: table, id: id, bio: textarea.value })
+               })
+               .then(function(response) { return response.json(); })
+               .then(function(body) {
+                   if (body.status !== 'success') throw new Error(body.error || 'Save failed');
+                   status.textContent = 'Saved';
+                   setTimeout(function() { status.textContent = ''; }, 2000);
+               })
+               .catch(function(error) {
+                   console.error('Save failed:', error);
+                   status.textContent = 'Error saving';
+               });
+           });
+
+           return div;
+       }
+
+       function renderRegistrations(registrations) {
+           const list = document.getElementById('registrationsList');
+           list.innerHTML = '';
+           registrations.forEach(function(r) {
+               if (!r.racer_name) return;
+               const invites = [r.invite1_name, r.invite2_name, r.invite3_name].filter(Boolean).join(', ');
+               const subLabel = invites ? `Invited: ${invites}` : 'No invites listed';
+               list.appendChild(bioCard(r.racer_name, subLabel, r.bio, 'registrations', r.id));
+           });
+           document.getElementById('registrationsBlock').classList.remove('hidden');
+       }
+
+       function renderInvitees(invitees) {
+           const list = document.getElementById('invitesList');
+           list.innerHTML = '';
+           invitees.forEach(function(i) {
+               const subLabel = `Invited by ${i.invited_by || 'Unknown'} · T-Shirt: ${i.tshirt_size || 'None'}`;
+               list.appendChild(bioCard(i.name, subLabel, i.bio, 'confirmed_invitees', i.id));
+           });
+           document.getElementById('invitesBlock').classList.remove('hidden');
+       }
+
+       document.getElementById('loginBtn').addEventListener('click', function() {
+           const value = document.getElementById('passwordInput').value;
+           if (!value) return;
+           adminPassword = value;
+           if (document.getElementById('rememberMe').checked) {
+               localStorage.setItem('adminPassword', value);
+           } else {
+               sessionStorage.setItem('adminPassword', value);
+           }
+           showAdmin();
+       });
+
+       document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+           if (e.key === 'Enter') document.getElementById('loginBtn').click();
+       });
+
+       document.getElementById('logoutBtn').addEventListener('click', function() {
+           sessionStorage.removeItem('adminPassword');
+           localStorage.removeItem('adminPassword');
+           adminPassword = '';
+           showLogin(false);
+       });
+
+       if (adminPassword) {
+           showAdmin();
+       }
+   </script>
+</body>
+</html>
