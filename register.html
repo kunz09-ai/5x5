@@ -3,7 +3,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Register - SLO 5x5 Adventure Race</title>
+   <title>Join the Waitlist - SLO 5x5 Adventure Race</title>
    <script src="https://cdn.tailwindcss.com"></script>
    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
    <script>
@@ -58,106 +58,32 @@
    <section class="pt-32 pb-24 bg-brand-dark min-h-screen">
        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
            <div class="text-center mb-12">
-               <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">CLAIM YOUR SPOT</h2>
-               <p class="text-gray-400">Register yourself and claim your 3 invitations for the SLO 5x5.</p>
+               <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">JOIN THE WAITLIST</h2>
+               <p class="text-gray-400 max-w-xl mx-auto">SLO 5x5 is invite-only, and it turns out that got a little too shareable. We're keeping this year's roster to 50. Drop your info below and we'll reach out if a spot opens up &mdash; or get a personal invite from someone already racing and skip the line.</p>
            </div>
 
-           <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="bg-brand-gray p-8 md:p-10 rounded-xl shadow-2xl border border-gray-700">
-              
-               <!-- Primary Racer -->
-               <div class="mb-10">
-                   <h3 class="text-2xl font-bold text-brand-orange border-b border-gray-700 pb-2 mb-6">YOUR INFORMATION</h3>
-                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                       <div>
-                           <label class="block text-sm font-medium text-gray-400 mb-2">Full Name *</label>
-                           <input type="text" name="racerName" required class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                       </div>
-                       <div>
-                           <label class="block text-sm font-medium text-gray-400 mb-2">Email Address *</label>
-                           <input type="email" name="racerEmail" required class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                       </div>
+           <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="bg-brand-gray p-8 md:p-10 rounded-xl shadow-2xl border border-gray-700 max-w-xl mx-auto">
+
+               <div class="space-y-6">
+                   <div>
+                       <label class="block text-sm font-medium text-gray-400 mb-2">Full Name *</label>
+                       <input type="text" name="racerName" required class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
                    </div>
-
-                   <!-- Extras & Party -->
-                   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-gray-700">
-                       <div>
-                           <label class="block text-sm font-medium text-gray-400 mb-2">T-Shirt Size from J.Carroll ($30)</label>
-                           <select name="tshirtSize" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               <option value="None">No thanks</option>
-                               <option value="S">Small</option>
-                               <option value="M">Medium</option>
-                               <option value="L">Large</option>
-                               <option value="XL">X-Large</option>
-                               <option value="2XL">2XL</option>
-                               <option value="3XL">3XL</option>
-                           </select>
-                       </div>
-                       <div>
-                           <label class="block text-sm font-medium text-gray-400 mb-2">Afterparty?</label>
-                           <select name="afterparty" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               <option value="Yes">Yes, I'll be there</option>
-                               <option value="No">No, can't make it</option>
-                           </select>
-                       </div>
-                       <div>
-                           <label class="block text-sm font-medium text-gray-400 mb-2">Party Guests</label>
-                           <input type="number" name="partyGuests" min="0" value="0" placeholder="0" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                       </div>
+                   <div>
+                       <label class="block text-sm font-medium text-gray-400 mb-2">Email Address *</label>
+                       <input type="email" name="racerEmail" required class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
                    </div>
-               </div>
-
-               <!-- Invites -->
-               <div class="mb-10">
-                   <h3 class="text-2xl font-bold text-brand-orange border-b border-gray-700 pb-2 mb-6">YOUR 3 INVITATIONS</h3>
-                   <p class="text-sm text-gray-400 mb-6">You have the power to invite 3 people to suffer with us. Provide their info below.</p>
-                  
-                   <div class="space-y-8">
-                       <!-- Invite 1 -->
-                       <div class="bg-gray-800 p-4 rounded border border-gray-700">
-                           <h4 class="text-white mb-4 text-lg">INVITEE #1</h4>
-                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <div>
-                                   <input type="text" name="invite1Name" placeholder="Name" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               </div>
-                               <div>
-                                   <input type="email" name="invite1Email" placeholder="Email Address" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               </div>
-                           </div>
-                       </div>
-
-                       <!-- Invite 2 -->
-                       <div class="bg-gray-800 p-4 rounded border border-gray-700">
-                           <h4 class="text-white mb-4 text-lg">INVITEE #2</h4>
-                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <div>
-                                   <input type="text" name="invite2Name" placeholder="Name" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               </div>
-                               <div>
-                                   <input type="email" name="invite2Email" placeholder="Email Address" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               </div>
-                           </div>
-                       </div>
-
-                       <!-- Invite 3 -->
-                       <div class="bg-gray-800 p-4 rounded border border-gray-700">
-                           <h4 class="text-white mb-4 text-lg">INVITEE #3</h4>
-                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <div>
-                                   <input type="text" name="invite3Name" placeholder="Name" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               </div>
-                               <div>
-                                   <input type="email" name="invite3Email" placeholder="Email Address" class="w-full bg-gray-900 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
-                               </div>
-                           </div>
-                       </div>
+                   <div>
+                       <label class="block text-sm font-medium text-gray-400 mb-2">Who invited you, or how'd you hear about SLO 5x5? <span class="text-gray-600">(optional)</span></label>
+                       <input type="text" name="howHeard" placeholder="e.g. saw a friend's Instagram story" class="w-full bg-gray-800 border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-transparent">
                    </div>
                </div>
 
                <!-- Feedback Message -->
-               <div id="formMessage" class="hidden mb-6 p-4 rounded-md font-bold text-center"></div>
+               <div id="formMessage" class="hidden mt-6 mb-2 p-4 rounded-md font-bold text-center"></div>
 
-               <button type="submit" id="submitBtn" class="w-full bg-brand-orange hover:bg-orange-500 text-white font-oswald tracking-widest text-xl py-5 rounded-md transition-colors flex justify-center items-center">
-                   <span>SUBMIT REGISTRATION</span>
+               <button type="submit" id="submitBtn" class="w-full bg-brand-orange hover:bg-orange-500 text-white font-oswald tracking-widest text-xl py-5 rounded-md transition-colors flex justify-center items-center mt-8">
+                   <span>JOIN THE WAITLIST</span>
                    <svg id="loadingSpinner" class="hidden animate-spin ml-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -213,7 +139,7 @@
                });
            })
            .then(function() {
-               showFeedback('success', "Registration received! Prepare to suffer.");
+               showFeedback('success', "You're on the list! We'll reach out if a spot opens up.");
                form.reset();
                resetButton();
            })

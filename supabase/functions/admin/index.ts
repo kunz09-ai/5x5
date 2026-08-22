@@ -30,6 +30,7 @@ function passwordMatches(provided: string): boolean {
 // Only these tables/columns can be touched from this endpoint -- keeps the
 // admin page from being able to write anything beyond curated bio text.
 const EDITABLE_TABLES = new Set(["registrations", "confirmed_invitees"]);
+const REGISTRATION_STATUSES = new Set(["confirmed", "waitlisted"]);
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -47,7 +48,7 @@ Deno.serve(async (req: Request) => {
         supabase
           .from("registrations")
           .select(
-            "id, created_at, racer_name, racer_email, tshirt_size, afterparty, party_guests, invite1_name, invite1_email, invite2_name, invite2_email, invite3_name, invite3_email, bio",
+            "id, created_at, racer_name, racer_email, status, how_heard, tshirt_size, afterparty, party_guests, invite1_name, invite1_email, invite2_name, invite2_email, invite3_name, invite3_email, bio",
           )
           .order("created_at", { ascending: true }),
         supabase
@@ -66,10 +67,22 @@ Deno.serve(async (req: Request) => {
 
   if (req.method === "PATCH") {
     try {
-      const { table, id, bio } = await req.json();
+      const { table, id, bio, status } = await req.json();
 
       if (!EDITABLE_TABLES.has(table) || typeof id !== "string") {
         return json({ error: "Invalid request" }, 400);
+      }
+
+      // Promoting someone off the waitlist is a status change, not a bio
+      // edit -- only registrations carry a status, and only these two
+      // values are ever valid.
+      if (status !== undefined) {
+        if (table !== "registrations" || !REGISTRATION_STATUSES.has(status)) {
+          return json({ error: "Invalid request" }, 400);
+        }
+        const { error } = await supabase.from(table).update({ status }).eq("id", id);
+        if (error) throw error;
+        return json({ status: "success" });
       }
 
       const { error } = await supabase.from(table).update({ bio }).eq("id", id);
